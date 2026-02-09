@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TV Slideshow Display</title>
+    <title>TV Slideshow</title>
     <style>
       * {
         margin: 0;
@@ -14,7 +14,6 @@
       body {
         overflow: hidden;
         background: #000;
-        font-family: "Arial", sans-serif;
       }
 
       .slideshow-container {
@@ -26,24 +25,22 @@
 
       .slide {
         position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
         height: 100%;
-        opacity: 0;
-        transition: opacity 1s ease-in-out;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        display: none;
       }
 
       .slide.active {
-        opacity: 1;
-        z-index: 2;
+        display: block;
       }
 
       .slide img {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: contain;
+        background: #000;
       }
 
       /* Progress bar */
@@ -55,25 +52,41 @@
         background: rgba(255, 255, 255, 0.9);
         width: 0%;
         z-index: 1000;
-        animation: progress 5s linear;
       }
 
-      @keyframes progress {
-        from {
-          width: 0%;
-        }
-        to {
-          width: 100%;
-        }
+      /* Loading indicator */
+      .loading {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 2rem;
+        font-family: Arial, sans-serif;
+        z-index: 999;
+      }
+
+      /* Slide counter */
+      .counter {
+        position: fixed;
+        top: 30px;
+        right: 30px;
+        font-size: 2rem;
+        color: white;
+        font-family: Arial, sans-serif;
+        background: rgba(0, 0, 0, 0.5);
+        padding: 10px 20px;
+        border-radius: 10px;
+        z-index: 100;
       }
     </style>
   </head>
   <body>
-    <div class="slideshow-container">
+    <div class="slideshow-container" id="slideshow">
       <!-- Slide 1 -->
       <div class="slide active">
         <img
-          src="https://res.cloudinary.com/dsslzfmqr/image/upload/v1763114758/enterprise/banners/banner/about-bricon-20251114100557.webp"
+          src="https://res.cloudinary.com/dsslzfmqr/image/upload/v1769508914/enterprise/blogs/blog/keo-cha-ron-epoxy-bricon-20260127171512.png"
           alt="Slide 1"
         />
       </div>
@@ -147,48 +160,140 @@
     <div class="progress-bar" id="progressBar"></div>
 
     <script>
-      let currentSlide = 0;
-      const slides = document.querySelectorAll(".slide");
-      const totalSlides = slides.length;
-      const slideInterval = 5000; // 5 seconds
-      const progressBar = document.getElementById("progressBar");
+      // Variables
+      var currentSlide = 0;
+      var slides = document.querySelectorAll(".slide");
+      var totalSlides = slides.length;
+      var slideInterval = 5000; // 5 seconds
+      var progressBar = document.getElementById("progressBar");
+      var counter = document.getElementById("counter");
+      var loading = document.getElementById("loading");
+      var progressWidth = 0;
+      var progressTimer;
+      var slideTimer;
+      var imagesLoaded = 0;
+
+      console.log("Total slides:", totalSlides);
+
+      // Preload all images
+      var images = document.querySelectorAll(".slide img");
+      for (var i = 0; i < images.length; i++) {
+        images[i].onload = function () {
+          imagesLoaded++;
+          console.log("Image loaded:", imagesLoaded, "/", totalSlides);
+          if (imagesLoaded === totalSlides) {
+            loading.style.display = "none";
+            counter.style.display = "block";
+            startSlideshow();
+          }
+        };
+        images[i].onerror = function () {
+          imagesLoaded++;
+          console.log("Image error:", imagesLoaded, "/", totalSlides);
+          if (imagesLoaded === totalSlides) {
+            loading.style.display = "none";
+            counter.style.display = "block";
+            startSlideshow();
+          }
+        };
+      }
+
+      // Fallback: start after 3 seconds even if images not loaded
+      setTimeout(function () {
+        if (imagesLoaded < totalSlides) {
+          console.log("Force start slideshow");
+          loading.style.display = "none";
+          counter.style.display = "block";
+          startSlideshow();
+        }
+      }, 3000);
+
+      function updateCounter() {
+        counter.textContent = currentSlide + 1 + "/" + totalSlides;
+      }
+
+      function updateProgressBar() {
+        progressWidth += 2; // Increase by 2% every 100ms (100ms * 50 = 5000ms)
+        if (progressWidth > 100) {
+          progressWidth = 100;
+        }
+        progressBar.style.width = progressWidth + "%";
+      }
+
+      function resetProgress() {
+        progressWidth = 0;
+        progressBar.style.width = "0%";
+        clearInterval(progressTimer);
+        progressTimer = setInterval(updateProgressBar, 100);
+      }
 
       function showSlide(index) {
-        // Remove active class from all slides
-        slides.forEach((slide) => slide.classList.remove("active"));
+        console.log("Showing slide:", index);
 
-        // Add active class to current slide
+        // Hide all slides
+        for (var i = 0; i < slides.length; i++) {
+          slides[i].classList.remove("active");
+        }
+
+        // Show current slide
         slides[index].classList.add("active");
 
-        // Reset and restart progress bar animation
-        progressBar.style.animation = "none";
-        setTimeout(() => {
-          progressBar.style.animation = "progress 5s linear";
-        }, 10);
+        // Update counter
+        updateCounter();
+
+        // Reset progress bar
+        resetProgress();
       }
 
       function nextSlide() {
-        currentSlide = (currentSlide + 1) % totalSlides;
+        currentSlide++;
+        if (currentSlide >= totalSlides) {
+          currentSlide = 0;
+        }
         showSlide(currentSlide);
       }
 
-      // Auto advance slides
-      setInterval(nextSlide, slideInterval);
+      function startSlideshow() {
+        console.log("Starting slideshow");
+        updateCounter();
+        resetProgress();
 
-      // Optional: Click to advance
-      document.addEventListener("click", () => {
+        // Start auto-advance
+        slideTimer = setInterval(nextSlide, slideInterval);
+
+        console.log("Slideshow started!");
+      }
+
+      // Click to advance
+      document.addEventListener("click", function () {
+        console.log("Click detected");
+        clearInterval(slideTimer);
         nextSlide();
+        slideTimer = setInterval(nextSlide, slideInterval);
       });
 
-      // Optional: Keyboard navigation
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "ArrowRight") {
+      // Keyboard navigation
+      document.addEventListener("keydown", function (e) {
+        if (e.keyCode === 39 || e.keyCode === 32) {
+          // Right arrow or Space
+          clearInterval(slideTimer);
           nextSlide();
-        } else if (e.key === "ArrowLeft") {
-          currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+          slideTimer = setInterval(nextSlide, slideInterval);
+        } else if (e.keyCode === 37) {
+          // Left arrow
+          clearInterval(slideTimer);
+          currentSlide--;
+          if (currentSlide < 0) {
+            currentSlide = totalSlides - 1;
+          }
           showSlide(currentSlide);
+          slideTimer = setInterval(nextSlide, slideInterval);
         }
       });
+
+      // Debug info
+      console.log("Script loaded successfully");
+      console.log("Slides found:", slides.length);
     </script>
   </body>
 </html>
