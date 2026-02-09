@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TV Slideshow</title>
+    <title>TV Slideshow - Auto</title>
     <style>
       * {
         margin: 0;
@@ -16,7 +16,7 @@
         background: #000;
       }
 
-      .slideshow-container {
+      .slideshow {
         position: relative;
         width: 100vw;
         height: 100vh;
@@ -29,11 +29,8 @@
         left: 0;
         width: 100%;
         height: 100%;
-        display: none;
-      }
-
-      .slide.active {
-        display: block;
+        opacity: 0;
+        animation: slideShow 45s infinite;
       }
 
       .slide img {
@@ -43,55 +40,77 @@
         background: #000;
       }
 
-      /* Progress bar */
-      .progress-bar {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        height: 5px;
-        background: rgba(255, 255, 255, 0.9);
-        width: 0%;
-        z-index: 1000;
+      /* Stagger animations - each slide starts at different time */
+      .slide:nth-child(1) {
+        animation-delay: 0s;
+      }
+      .slide:nth-child(2) {
+        animation-delay: 5s;
+      }
+      .slide:nth-child(3) {
+        animation-delay: 10s;
+      }
+      .slide:nth-child(4) {
+        animation-delay: 15s;
+      }
+      .slide:nth-child(5) {
+        animation-delay: 20s;
+      }
+      .slide:nth-child(6) {
+        animation-delay: 25s;
+      }
+      .slide:nth-child(7) {
+        animation-delay: 30s;
+      }
+      .slide:nth-child(8) {
+        animation-delay: 35s;
+      }
+      .slide:nth-child(9) {
+        animation-delay: 40s;
       }
 
-      /* Loading indicator */
-      .loading {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        color: white;
-        font-size: 2rem;
-        font-family: Arial, sans-serif;
-        z-index: 999;
+      @keyframes slideShow {
+        0% {
+          opacity: 0;
+        }
+        2% {
+          opacity: 1;
+        }
+        11.11% {
+          opacity: 1;
+        }
+        13.11% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 0;
+        }
       }
 
-      /* Slide counter */
       .counter {
         position: fixed;
         top: 30px;
         right: 30px;
-        font-size: 2rem;
+        font-size: 2.5rem;
         color: white;
         font-family: Arial, sans-serif;
-        background: rgba(0, 0, 0, 0.5);
-        padding: 10px 20px;
+        background: rgba(0, 0, 0, 0.7);
+        padding: 15px 30px;
         border-radius: 10px;
         z-index: 100;
+        font-weight: bold;
       }
     </style>
   </head>
   <body>
-    <div class="slideshow-container" id="slideshow">
-      <!-- Slide 1 -->
-      <div class="slide active">
+    <div class="slideshow">
+      <div class="slide">
         <img
           src="https://res.cloudinary.com/dsslzfmqr/image/upload/v1769508914/enterprise/blogs/blog/keo-cha-ron-epoxy-bricon-20260127171512.png"
           alt="Slide 1"
         />
       </div>
 
-      <!-- Slide 2 -->
       <div class="slide">
         <img
           src="https://res.cloudinary.com/dsslzfmqr/image/upload/v1760768516/enterprise/categories/duan/du-an-dream-city6-20251018062156.webp"
@@ -99,7 +118,6 @@
         />
       </div>
 
-      <!-- Slide 3 -->
       <div class="slide">
         <img
           src="https://res.cloudinary.com/dsslzfmqr/image/upload/v1760768517/enterprise/categories/duan/du-an-novaworld-phan-thiet7-20251018062157.webp"
@@ -107,7 +125,6 @@
         />
       </div>
 
-      <!-- Slide 4 -->
       <div class="slide">
         <img
           src="https://res.cloudinary.com/dsslzfmqr/image/upload/v1760772648/enterprise/categories/duan/du-an-to-hop-trung-tam-thuong-mai-va-khach-san-hoa-20251018073046.webp"
@@ -115,7 +132,6 @@
         />
       </div>
 
-      <!-- Slide 5 -->
       <div class="slide">
         <img
           src="https://res.cloudinary.com/dsslzfmqr/image/upload/v1760768526/enterprise/categories/duan/toa-nha-cau-lac-bo-golf-da-lat19-20251018062206.webp"
@@ -123,7 +139,6 @@
         />
       </div>
 
-      <!-- Slide 6 -->
       <div class="slide">
         <img
           src="https://res.cloudinary.com/dsslzfmqr/image/upload/v1760768525/enterprise/categories/duan/swanbay-dai-phuoc15-20251018062205.webp"
@@ -131,7 +146,6 @@
         />
       </div>
 
-      <!-- Slide 7 -->
       <div class="slide">
         <img
           src="https://res.cloudinary.com/dsslzfmqr/image/upload/v1760768520/enterprise/categories/duan/khu-du-lich-bien-blue-sapphire-resort18-20251018062200.webp"
@@ -139,7 +153,6 @@
         />
       </div>
 
-      <!-- Slide 8 -->
       <div class="slide">
         <img
           src="https://res.cloudinary.com/dsslzfmqr/image/upload/v1760768518/enterprise/categories/duan/du-an-vinhome-golden-river-ba-son8-20251018062158.webp"
@@ -147,7 +160,6 @@
         />
       </div>
 
-      <!-- Slide 9 -->
       <div class="slide">
         <img
           src="https://res.cloudinary.com/dsslzfmqr/image/upload/v1760768523/enterprise/categories/duan/pullman-saigon-centre-tp-hcm12-20251018062203.webp"
@@ -155,145 +167,5 @@
         />
       </div>
     </div>
-
-    <!-- Progress bar -->
-    <div class="progress-bar" id="progressBar"></div>
-
-    <script>
-      // Variables
-      var currentSlide = 0;
-      var slides = document.querySelectorAll(".slide");
-      var totalSlides = slides.length;
-      var slideInterval = 5000; // 5 seconds
-      var progressBar = document.getElementById("progressBar");
-      var counter = document.getElementById("counter");
-      var loading = document.getElementById("loading");
-      var progressWidth = 0;
-      var progressTimer;
-      var slideTimer;
-      var imagesLoaded = 0;
-
-      console.log("Total slides:", totalSlides);
-
-      // Preload all images
-      var images = document.querySelectorAll(".slide img");
-      for (var i = 0; i < images.length; i++) {
-        images[i].onload = function () {
-          imagesLoaded++;
-          console.log("Image loaded:", imagesLoaded, "/", totalSlides);
-          if (imagesLoaded === totalSlides) {
-            loading.style.display = "none";
-            counter.style.display = "block";
-            startSlideshow();
-          }
-        };
-        images[i].onerror = function () {
-          imagesLoaded++;
-          console.log("Image error:", imagesLoaded, "/", totalSlides);
-          if (imagesLoaded === totalSlides) {
-            loading.style.display = "none";
-            counter.style.display = "block";
-            startSlideshow();
-          }
-        };
-      }
-
-      // Fallback: start after 3 seconds even if images not loaded
-      setTimeout(function () {
-        if (imagesLoaded < totalSlides) {
-          console.log("Force start slideshow");
-          loading.style.display = "none";
-          counter.style.display = "block";
-          startSlideshow();
-        }
-      }, 3000);
-
-      function updateCounter() {
-        counter.textContent = currentSlide + 1 + "/" + totalSlides;
-      }
-
-      function updateProgressBar() {
-        progressWidth += 2; // Increase by 2% every 100ms (100ms * 50 = 5000ms)
-        if (progressWidth > 100) {
-          progressWidth = 100;
-        }
-        progressBar.style.width = progressWidth + "%";
-      }
-
-      function resetProgress() {
-        progressWidth = 0;
-        progressBar.style.width = "0%";
-        clearInterval(progressTimer);
-        progressTimer = setInterval(updateProgressBar, 100);
-      }
-
-      function showSlide(index) {
-        console.log("Showing slide:", index);
-
-        // Hide all slides
-        for (var i = 0; i < slides.length; i++) {
-          slides[i].classList.remove("active");
-        }
-
-        // Show current slide
-        slides[index].classList.add("active");
-
-        // Update counter
-        updateCounter();
-
-        // Reset progress bar
-        resetProgress();
-      }
-
-      function nextSlide() {
-        currentSlide++;
-        if (currentSlide >= totalSlides) {
-          currentSlide = 0;
-        }
-        showSlide(currentSlide);
-      }
-
-      function startSlideshow() {
-        console.log("Starting slideshow");
-        updateCounter();
-        resetProgress();
-
-        // Start auto-advance
-        slideTimer = setInterval(nextSlide, slideInterval);
-
-        console.log("Slideshow started!");
-      }
-
-      // Click to advance
-      document.addEventListener("click", function () {
-        console.log("Click detected");
-        clearInterval(slideTimer);
-        nextSlide();
-        slideTimer = setInterval(nextSlide, slideInterval);
-      });
-
-      // Keyboard navigation
-      document.addEventListener("keydown", function (e) {
-        if (e.keyCode === 39 || e.keyCode === 32) {
-          // Right arrow or Space
-          clearInterval(slideTimer);
-          nextSlide();
-          slideTimer = setInterval(nextSlide, slideInterval);
-        } else if (e.keyCode === 37) {
-          // Left arrow
-          clearInterval(slideTimer);
-          currentSlide--;
-          if (currentSlide < 0) {
-            currentSlide = totalSlides - 1;
-          }
-          showSlide(currentSlide);
-          slideTimer = setInterval(nextSlide, slideInterval);
-        }
-      });
-
-      // Debug info
-      console.log("Script loaded successfully");
-      console.log("Slides found:", slides.length);
-    </script>
   </body>
 </html>
