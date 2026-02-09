@@ -30,10 +30,17 @@
         width: 100%;
         height: 100%;
         opacity: 0;
-        animation: slideShow 45s infinite;
+        animation: slideShow 50s infinite;
       }
 
       .slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        background: #000;
+      }
+
+      .slide video {
         width: 100%;
         height: 100%;
         object-fit: contain;
@@ -68,6 +75,9 @@
       .slide:nth-child(9) {
         animation-delay: 40s;
       }
+      .slide:nth-child(10) {
+        animation-delay: 45s;
+      }
 
       @keyframes slideShow {
         0% {
@@ -76,94 +86,99 @@
         2% {
           opacity: 1;
         }
-        11.11% {
+        10% {
           opacity: 1;
         }
-        13.11% {
+        12% {
           opacity: 0;
         }
         100% {
           opacity: 0;
         }
       }
-
-      .counter {
-        position: fixed;
-        top: 30px;
-        right: 30px;
-        font-size: 2.5rem;
-        color: white;
-        font-family: Arial, sans-serif;
-        background: rgba(0, 0, 0, 0.7);
-        padding: 15px 30px;
-        border-radius: 10px;
-        z-index: 100;
-        font-weight: bold;
-      }
     </style>
   </head>
   <body>
     <div class="slideshow">
+      <!-- Slide 1: Video -->
+      <div class="slide">
+        <video autoplay muted loop playsinline>
+          <source
+            src="https://res.cloudinary.com/dxjsaxjri/video/upload/v1770612840/yotu_aba5ig.mp4"
+            type="video/mp4"
+          />
+        </video>
+      </div>
+
+      <!-- Slide 2 -->
       <div class="slide">
         <img
           src="https://res.cloudinary.com/dsslzfmqr/image/upload/v1769508914/enterprise/blogs/blog/keo-cha-ron-epoxy-bricon-20260127171512.png"
-          alt="Slide 1"
-        />
-      </div>
-
-      <div class="slide">
-        <img
-          src="https://res.cloudinary.com/dsslzfmqr/image/upload/v1760768516/enterprise/categories/duan/du-an-dream-city6-20251018062156.webp"
           alt="Slide 2"
         />
       </div>
 
+      <!-- Slide 3 -->
       <div class="slide">
         <img
-          src="https://res.cloudinary.com/dsslzfmqr/image/upload/v1760768517/enterprise/categories/duan/du-an-novaworld-phan-thiet7-20251018062157.webp"
+          src="https://res.cloudinary.com/dsslzfmqr/image/upload/v1760768516/enterprise/categories/duan/du-an-dream-city6-20251018062156.webp"
           alt="Slide 3"
         />
       </div>
 
+      <!-- Slide 4 -->
       <div class="slide">
         <img
-          src="https://res.cloudinary.com/dsslzfmqr/image/upload/v1760772648/enterprise/categories/duan/du-an-to-hop-trung-tam-thuong-mai-va-khach-san-hoa-20251018073046.webp"
+          src="https://res.cloudinary.com/dsslzfmqr/image/upload/v1760768517/enterprise/categories/duan/du-an-novaworld-phan-thiet7-20251018062157.webp"
           alt="Slide 4"
         />
       </div>
 
+      <!-- Slide 5 -->
       <div class="slide">
         <img
-          src="https://res.cloudinary.com/dsslzfmqr/image/upload/v1760768526/enterprise/categories/duan/toa-nha-cau-lac-bo-golf-da-lat19-20251018062206.webp"
+          src="https://res.cloudinary.com/dsslzfmqr/image/upload/v1760772648/enterprise/categories/duan/du-an-to-hop-trung-tam-thuong-mai-va-khach-san-hoa-20251018073046.webp"
           alt="Slide 5"
         />
       </div>
 
+      <!-- Slide 6 -->
       <div class="slide">
         <img
-          src="https://res.cloudinary.com/dsslzfmqr/image/upload/v1760768525/enterprise/categories/duan/swanbay-dai-phuoc15-20251018062205.webp"
+          src="https://res.cloudinary.com/dsslzfmqr/image/upload/v1760768526/enterprise/categories/duan/toa-nha-cau-lac-bo-golf-da-lat19-20251018062206.webp"
           alt="Slide 6"
         />
       </div>
 
+      <!-- Slide 7 -->
       <div class="slide">
         <img
-          src="https://res.cloudinary.com/dsslzfmqr/image/upload/v1760768520/enterprise/categories/duan/khu-du-lich-bien-blue-sapphire-resort18-20251018062200.webp"
+          src="https://res.cloudinary.com/dsslzfmqr/image/upload/v1760768525/enterprise/categories/duan/swanbay-dai-phuoc15-20251018062205.webp"
           alt="Slide 7"
         />
       </div>
 
+      <!-- Slide 8 -->
       <div class="slide">
         <img
-          src="https://res.cloudinary.com/dsslzfmqr/image/upload/v1760768518/enterprise/categories/duan/du-an-vinhome-golden-river-ba-son8-20251018062158.webp"
+          src="https://res.cloudinary.com/dsslzfmqr/image/upload/v1760768520/enterprise/categories/duan/khu-du-lich-bien-blue-sapphire-resort18-20251018062200.webp"
           alt="Slide 8"
         />
       </div>
 
+      <!-- Slide 9 -->
+      <div class="slide">
+        <img
+          src="https://res.cloudinary.com/dsslzfmqr/image/upload/v1760768518/enterprise/categories/duan/du-an-vinhome-golden-river-ba-son8-20251018062158.webp"
+          alt="Slide 9"
+        />
+      </div>
+
+      <!-- Slide 10 -->
       <div class="slide">
         <img
           src="https://res.cloudinary.com/dsslzfmqr/image/upload/v1760768523/enterprise/categories/duan/pullman-saigon-centre-tp-hcm12-20251018062203.webp"
-          alt="Slide 9"
+          alt="Slide 10"
         />
       </div>
     </div>
